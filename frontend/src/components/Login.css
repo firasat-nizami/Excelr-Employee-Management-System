@@ -1,0 +1,71 @@
+.login-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  background: #f2f4f7;
+}
+
+.left-box {
+  width: 50%;
+  padding: 60px;
+}
+
+.left-box h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.left-box p {
+  margin-bottom: 25px;
+}
+
+label {
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0 15px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  cursor: pointer;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.signup-text {
+  margin-top: 20px;
+}
+
+.right-box {
+  width: 50%;
+  background: #fff0ea;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-box img {
+  width: 280px;
+}
