@@ -1,0 +1,92 @@
+/* Main Container */
+.admin-container {
+  width: 100%;
+  min-height: 100vh;
+  background: #f5f9ff;
+}
+
+/* Logo */
+.admin-logo {
+  height: 40px;
+  margin-right: 12px;
+}
+
+/* -------- Header -------- */
+.admin-header {
+  background: #dff0ff;
+  padding: 18px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+/* Logout Button */
+.logout-btn {
+  background: #1a73e8;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.logout-btn:hover {
+  background: #1558b0;
+}
+
+/* -------- Hero Section -------- */
+.hero-section {
+  margin-top: 40px;
+  padding: 40px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hero-left {
+  flex: 1;
+}
+
+.hero-left h1 {
+  font-size: 48px;
+  color: #0d1b3d;
+  margin-bottom: 20px;
+  line-height: 58px;
+}
+
+.hero-left p {
+  font-size: 16px;
+  max-width: 450px;
+  margin-bottom: 20px;
+}
+
+.get-started-btn {
+  background: #1a73e8;
+  color: white;
+  padding: 10px 22px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.get-started-btn:hover {
+  background: #1257b5;
+}
+
+.hero-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-image {
+  width: 420px;
+  border-radius: 10px;
+}
