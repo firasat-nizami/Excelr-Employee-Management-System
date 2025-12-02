@@ -2,34 +2,45 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Platform from "./pages/Platform";
+import Solutions from "./pages/Solutions";
 import AdminDashboard from "./pages/AdminDashboard";
 import Sidebar from "./components/Sidebar";
 
-import Platform from "./pages/Platform";
-
+// New Pages
+import About from "./pages/About";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Terms from "./pages/Terms";
 
 function App() {
   return (
-    <Routes>
+    <>
+      <Routes>
+        {/* Public Pages */}
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
 
-      {/* Public Pages */}
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
+        {/* New Pages */}
+        <Route path="/platform" element={<Platform />} />
+        <Route path="/solutions" element={<Solutions />} />
 
-      <Route path="/platform" element={<Platform />} />
+        {/* Footer Linked Pages */}
+        <Route path="/about" element={<About />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<Terms />} />
 
-
-      {/* Admin Panel (with Sidebar) */}
-      <Route
-        path="/dashboard"
-        element={
-          <Sidebar>
-            <AdminDashboard />
-          </Sidebar>
-        }
-      />
-    </Routes>
+        {/* Admin Dashboard */}
+        <Route
+          path="/dashboard"
+          element={
+            <Sidebar>
+              <AdminDashboard />
+            </Sidebar>
+          }
+        />
+      </Routes>
+    </>
   );
 }
 
