@@ -1,21 +1,46 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Platform from "./pages/Platform";
+import Solutions from "./pages/Solutions";
+import AdminDashboard from "./pages/AdminDashboard";
+import Sidebar from "./components/Sidebar";
 
-import Login from "./components/Login";
-import Signup from "./components/Signup";
+// New Pages
+import About from "./pages/About";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Terms from "./pages/Terms";
 
 function App() {
   return (
-    <BrowserRouter>
+    <>
       <Routes>
-        <Route path="/" element={<Login />} />
+        {/* Public Pages */}
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+
+        {/* New Pages */}
+        <Route path="/platform" element={<Platform />} />
+        <Route path="/solutions" element={<Solutions />} />
+
+        {/* Footer Linked Pages */}
+        <Route path="/about" element={<About />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<Terms />} />
+
+        {/* Admin Dashboard */}
+        <Route
+          path="/dashboard"
+          element={
+            <Sidebar>
+              <AdminDashboard />
+            </Sidebar>
+          }
+        />
       </Routes>
-
-
-     
-    </BrowserRouter>
+    </>
   );
 }
 
