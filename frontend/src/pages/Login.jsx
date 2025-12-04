@@ -65,9 +65,7 @@ const Login = () => {
             )}
           </Formik>
 
-          <p className="register-text">
-            Don’t have an account? <a href="/signup">Create one</a>
-          </p>
+          {/* This section has been removed */}
         </div>
       </div>
 

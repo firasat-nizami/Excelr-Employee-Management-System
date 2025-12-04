@@ -7,6 +7,12 @@ import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 
+import About from "./pages/About";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Terms from "./pages/Terms";
+import Platform from "./pages/Platform";
+import Solutions from "./pages/Solutions"; // <-- New Page
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -16,9 +22,16 @@ const router = createBrowserRouter([
       { path: "login", element: <Login /> },
       { path: "signup", element: <Signup /> },
       { path: "forgot-password", element: <ForgotPassword /> },
-      { path: "reset-password", element: <ResetPassword /> }
+      { path: "reset-password", element: <ResetPassword /> },
+
+      { path: "about", element: <About /> },
+      { path: "privacy-policy", element: <PrivacyPolicy /> },
+      { path: "terms", element: <Terms /> },
+
+      { path: "platform", element: <Platform /> },
+      { path: "solutions", element: <Solutions /> } // <-- FIXED
     ]
   }
 ]);
 
-export default router;   
+export default router;

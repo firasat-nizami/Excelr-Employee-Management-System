@@ -1,4 +1,3 @@
-import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
@@ -10,8 +9,8 @@ export default function Solutions() {
       <div className="page-container">
         <h1>Our Solutions</h1>
         <p>
-          We offer end-to-end employee management solutions such as payroll,
-          attendance automation, onboarding, leave management, and workforce analytics.
+          We provide end-to-end HRMS and Employee Management solutions including
+          onboarding automation, attendance tracking, payroll, and more.
         </p>
       </div>
 

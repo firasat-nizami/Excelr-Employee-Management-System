@@ -2,9 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/Footer.css";
 
-
-
-
 function Footer() {
   return (
     <footer className="footer">
@@ -38,13 +35,16 @@ function Footer() {
           </ul>
         </div>
 
-        {/* Social Media */}
+        {/* Social Media (UPDATED SECTION) */}
         <div className="footer-section">
           <h3>Follow Us</h3>
+          {/* Reverting to a div with icon links for a horizontal layout as seen in the image */}
           <div className="footer-socials">
-            <a href="#" aria-label="Website">🌐</a>
-            <a href="#" aria-label="Facebook">👍</a>
-            <a href="#" aria-label="Twitter">🐦</a>
+            {/* Using emojis as simple icons/symbols */}
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube">▶️</a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">🔵</a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">📸</a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">🐦</a>
           </div>
         </div>
 

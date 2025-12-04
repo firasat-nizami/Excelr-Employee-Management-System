@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Header.css";   // ✔ Correct path (same folder)
+import "./Header.css";
 
 export default function Header() {
   return (
@@ -10,10 +10,11 @@ export default function Header() {
       </Link>
 
       <nav className="nav">
-        <Link to="/platform">Platform</Link>
-        <Link to="/solutions">Solutions</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/signup" className="start-btn">Start for free</Link>
+        {/* Home Link */}
+        <Link to="/">Home</Link>
+        
+        {/* Login Button: Now uses the class "login-btn" */}
+        <Link to="/login" className="login-btn">Login</Link>
       </nav>
     </header>
   );

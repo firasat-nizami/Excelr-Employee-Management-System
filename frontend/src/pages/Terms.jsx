@@ -1,18 +1,8 @@
-import React from "react";
-import Footer from "../components/Footer";
-
-function Terms() {
+export default function Terms() {
   return (
-    <>
-      <div style={{ padding: "50px" }}>
-        <h1>Terms & Conditions</h1>
-        <p>
-          By using our system, you agree to follow all applicable rules and respect user data.
-        </p>
-      </div>
-      <Footer />
-    </>
+    <div>
+      <h2>Terms & Conditions</h2>
+      <p>Please read the terms carefully before using our platform.</p>
+    </div>
   );
 }
-
-export default Terms;

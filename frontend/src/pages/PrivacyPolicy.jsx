@@ -1,18 +1,8 @@
-import React from "react";
-import Footer from "../components/Footer";
-
-function PrivacyPolicy() {
+export default function PrivacyPolicy() {
   return (
-    <>
-      <div style={{ padding: "50px" }}>
-        <h1>Privacy Policy</h1>
-        <p>
-          We value your privacy. Your data is securely stored and never shared with third parties.
-        </p>
-      </div>
-      <Footer />
-    </>
+    <div>
+      <h2>Privacy Policy</h2>
+      <p>Your privacy is important to us.</p>
+    </div>
   );
 }
-
-export default PrivacyPolicy;
