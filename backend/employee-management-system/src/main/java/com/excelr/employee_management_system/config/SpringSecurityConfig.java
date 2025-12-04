@@ -34,9 +34,10 @@ public class SpringSecurityConfig {
 		http.csrf(csrf -> csrf.disable())
 		.authorizeHttpRequests(auth -> {
 			auth.requestMatchers("/api/employees/login","/auth/forgot-password","/auth/verify-otp","/auth/reset-password").permitAll()
-			.requestMatchers(HttpMethod.GET,"/api/employees").permitAll()
-			.requestMatchers(HttpMethod.POST,"/auth").permitAll()
+			.requestMatchers(HttpMethod.GET,"/api/employees/**").permitAll()
+			.requestMatchers(HttpMethod.DELETE,"/api/employees/**").permitAll()
 			.requestMatchers(HttpMethod.OPTIONS).permitAll()
+			.requestMatchers(HttpMethod.POST,"/auth").permitAll()
 			.requestMatchers(HttpMethod.POST,"/api/employees").hasRole("ADMIN")
 			.anyRequest().authenticated();
 		})

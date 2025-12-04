@@ -83,6 +83,23 @@ public class EmployeeServiceImp implements EmployeeService {
 		
 		
 	}
+	
+	@Override
+	public Employee getEmployeeByIdService(Integer id) {
+		Employee emp = employeeRepository.findById(id).orElseThrow(() -> new EmployeeException("There is no employee with this id "+id));
+		return emp;
+	}
+
+	
+
+	@Override
+	public String deleteEmployeeByIdService(Integer id) {
+		
+		employeeRepository.deleteById(id);
+		  
+		return "Employee Deleted";
+		
+	}
 
 
 }
