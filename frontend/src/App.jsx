@@ -11,6 +11,7 @@ import Sidebar from "./components/Sidebar";
 import About from "./pages/About";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/admin-dashboard" element={<Dashboard/>}/>
 
         {/* New Pages */}
         <Route path="/platform" element={<Platform />} />
