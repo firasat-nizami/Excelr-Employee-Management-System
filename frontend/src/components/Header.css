@@ -1,0 +1,74 @@
+/* Container styles */
+.header {
+  width: 100%; 
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border-bottom: 1px solid #eee;
+}
+
+/* Logo */
+.logo {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0d1b3d;
+  text-decoration: none;
+}
+
+/* Navbar container for links */
+.nav {
+  display: flex;
+  align-items: center !important; 
+  gap: 30px;
+}
+
+/* Base style for all links inside .nav (Home link) */
+.nav a {
+  text-decoration: none;
+  font-size: 16px;
+  
+  /* ⭐ BOLD FIX: Increase font-weight to 700 for bold text */
+  font-weight: 700; 
+  
+  color: #333;
+  transition: 0.2s ease-in-out;
+  
+  /* Alignment fixes */
+  margin: 0 !important; 
+  padding: 0 !important;
+  vertical-align: middle !important; 
+}
+
+/* Hover style for regular links (Home) - excludes the button */
+.nav a:not(.login-btn):hover {
+  color: #1a73e8;
+}
+
+/* ⭐ LOGIN BUTTON STYLES (Includes Bold Text) */
+.header .nav .login-btn {
+  /* Appearance */
+  background-color: #1a73e8 !important;
+  color: white !important; 
+  
+  /* SQUARE LOOK */
+  padding: 12px 24px !important; 
+  border-radius: 0 !important; 
+  
+  /* BOLD FIX: Ensure it is 700 even though it's covered by .nav a */
+  font-weight: 700 !important; 
+  
+  /* Alignment Fixes */
+  display: block !important; 
+  margin: 0 !important;
+  
+  /* Transition */
+  transition: background-color 0.2s ease-in-out !important;
+}
+
+/* Hover effect for the Login button */
+.header .nav .login-btn:hover {
+  background-color: #0d47a1 !important; 
+  color: white !important; 
+}
