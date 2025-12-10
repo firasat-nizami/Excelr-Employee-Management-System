@@ -26,6 +26,11 @@ function App() {
 
         {/* Admin */}
         <Route path="/admin-dashboard" element={<Dashboard />} />
+
+         {/* Dashboards */}
+ 
+        <Route path="/employee-dashboard" element={<Dashboard />} />
+        
       </Routes>
     </BrowserRouter>
   );

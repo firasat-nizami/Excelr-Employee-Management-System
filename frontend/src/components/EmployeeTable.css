@@ -1,0 +1,66 @@
+.container {
+  width: 80%;
+  margin: 40px 20px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.create-btn {
+  background: #1a73e8;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.create-btn:hover {
+  background: #1557b0;
+}
+
+.emp-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.emp-table th,
+.emp-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.emp-table th {
+  background: #f1f5f9;
+}
+
+.actions {
+  display: flex;
+  gap: 15px;
+}
+
+.icon {
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.edit {
+  color: #1e88e5;
+}
+
+.delete {
+  color: #e53935;
+}
+
+.icon:hover {
+  opacity: 0.7;
+}

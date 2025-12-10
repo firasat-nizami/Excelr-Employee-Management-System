@@ -1,20 +1,12 @@
 import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "../styles/Login.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import axios from "axios";
 
-// Validation schema
-const LoginSchema = Yup.object().shape({
-  email: Yup.string()
-    .email("Invalid email format")
-    .required("Email is required"),
-  password: Yup.string()
-    .min(6, "Password must be at least 6 characters")
-    .required("Password is required"),
-});
+// Validation schema using Yup
+
 
 const Login = () => {
   const [data, setData] = useState({
@@ -22,63 +14,68 @@ const Login = () => {
     password: "",
   });
 
-  const [val,setVal] = useState([])
+  const [errors, setErrors] = useState({});
 
+  // Handle input change
   const handleChange = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
 
-    setData((prev) => {
-      return {
-        ...prev,
-        [name]: value
-      };
-    });
-      
-  }
+    setData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
+  // Login API call
   const login = async (obj) => {
-   
-
     try {
-        const response = await axios.post(
-            "http://localhost:8080/api/employees/login",
-            obj,
-            {
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }
-        );
+      const response = await axios.post(
+        "http://localhost:8080/api/employees/login",
+        obj,
+        { headers: { "Content-Type": "application/json" } }
+      );
 
-        // If login success
-        console.log("Login Successful!");
-        console.log("Response:", response.data);
+      console.log("Login Successful!", response.data);
 
-        // Store token
-        //localStorage.setItem("token", response.data.token);
-
-        // Navigate to dashboard based on role
-        if (response.data.role === "ADMIN") {
-            window.location.href = "/admin-dashboard";
-        } else {
-            window.location.href = "/employee-dashboard";
-        }
+      // Example: redirect based on role
+      if (response.data.role === "ADMIN") {
+        window.location.href = "/admin-dashboard";
+      } else {
+        window.location.href = "/employee-dashboard";
+      }
 
     } catch (error) {
-        console.error("Login Failed:", error);
-        alert("Invalid credentials!");
+      console.error("Login Failed:", error);
+      alert("Invalid credentials!");
     }
-};
+  };
 
+  // Handle login submit
+  const handleLogin = async (e) => {
+    
+    e.preventDefault();
+    // Validate data using Yup
+    try {
+ 
 
-  const handleLogin = (e) => {
-     e.preventDefault();
+      const obj = {
+        personalMail: data.email,
+        password: data.password,
+      };
 
-     console.log(data.email,data.password)
-     let obj = {personalMail:data.email,password:data.password};
-    login(obj)
-     
-  }
+      login(obj);
+
+    } catch (validationErrors) {
+      const newErrors = {};
+      validationErrors.inner.forEach((err) => {
+        newErrors[err.path] = err.message;
+      });
+
+      setErrors(newErrors);
+    }
+    
+  };
+
   return (
     <>
       <Header />
@@ -88,51 +85,33 @@ const Login = () => {
           <h2>Welcome Back</h2>
           <p className="login-subtext">Login to access your dashboard</p>
 
-          <Formik
-            initialValues={{ email: "", password: "" }}
-            validationSchema={LoginSchema}
-            onSubmit={(values) => {
-              console.log("Logged In:", values);
-            }}
-          >
-            {() => (
-              <Form>
-                <label>Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Enter your email"
-                  value={data.email}
-                  onChange={handleChange}
-                />
-                <ErrorMessage
-                  name="email"
-                  component="div"
-                  className="error-text"
-                />
+          <form >
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              value={data.email}
+              onChange={handleChange}
+            />
+            {errors.email && <div className="error-text">{errors.email}</div>}
 
-                <label>Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Enter your password"
-                  value={data.password}
-                  onChange={handleChange}
-                />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="error-text"
-                />
-
-                <button type="submit" className="login-btn" onClick={(e) => handleLogin(e)}>
-                  Login
-                </button>
-              </Form>
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              value={data.password}
+              onChange={handleChange}
+            />
+            {errors.password && (
+              <div className="error-text">{errors.password}</div>
             )}
-          </Formik>
 
-          {/* This section has been removed */}
+            <button type="button" className="login-btn" onClick={handleLogin}>
+              Login
+            </button>
+          </form>
         </div>
       </div>
 
