@@ -38,7 +38,7 @@ public class SpringSecurityConfig {
 			.requestMatchers(HttpMethod.DELETE,"/api/employees/**").permitAll()
 			.requestMatchers(HttpMethod.OPTIONS).permitAll()
 			.requestMatchers(HttpMethod.POST,"/auth").permitAll()
-			.requestMatchers(HttpMethod.POST,"/api/employees").hasRole("ADMIN")
+			.requestMatchers(HttpMethod.POST,"/api/employees").permitAll()
 			.anyRequest().authenticated();
 		})
 		.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

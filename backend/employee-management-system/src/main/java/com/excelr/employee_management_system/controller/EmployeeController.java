@@ -47,6 +47,8 @@ public class EmployeeController {
 	    @PostMapping
 	    public ResponseEntity<Employee> addEmployee(@Valid @RequestBody EmployeeDto employeeDto) {
 	    	
+	    	System.out.println(employeeDto.getPersonalMail()+"cvvvv"+employeeDto.getPassword());
+	    	
 	    	employeeDto.setPassword(encoder.encode(employeeDto.getPassword()));
 
 	        Employee savedEmployee = employeeService.addEmployeeService(employeeDto);

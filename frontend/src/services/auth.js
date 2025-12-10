@@ -17,6 +17,7 @@ export async function apiSignup(payload) {
 export async function login(credentials) {
   if (USE_API) {
     const data = await apiLogin(credentials);
+    
     localStorage.setItem("ems_token", data.token);
     localStorage.setItem("ems_role", data.role);
     localStorage.setItem("ems_user", JSON.stringify(data.user || {}));
