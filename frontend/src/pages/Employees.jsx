@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { getEmployees, deleteEmployee } from "../services/api";
-import { Link } from "react-router-dom";
+//import React, { useEffect, useState } from "react";
+//import { getEmployees, deleteEmployee } from "../services/api";
+//import { Link } from "react-router-dom";
 
-export default function Employees(){
+/*export default function Employees(){
   const [emps,setEmps]=useState([]);
   const [loading,setLoading]=useState(true);
 
@@ -47,4 +47,18 @@ export default function Employees(){
       </div>
     </div>
   );
-}
+}*/
+
+
+import React from "react";
+
+const Employees = () => {
+  return (
+    <div>
+      <h2>Employees Page</h2>
+      <p>Manage employee data here.</p>
+    </div>
+  );
+};
+
+export default Employees;
