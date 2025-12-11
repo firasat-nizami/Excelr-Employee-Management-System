@@ -1,18 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { Link,useNavigate  } from 'react-router-dom';
+import { FaEdit, FaTrash,FaEye } from "react-icons/fa";
 import "./EmployeeTable.css";
 
 
-export default function EmployeeTable({employee,onDelete}){
+export default function EmployeeTable({employee,onDelete,onView}){
 
   
+
    const handleDelete = (id) => {
     onDelete(id);
   };
 
+  const handleView = (emp_id) => {
+    onView(emp_id)
+  }
+
   const handleEdit = (id) => {
-    nav
+    
   };
   return (
       <div className="container">
@@ -42,6 +47,7 @@ export default function EmployeeTable({employee,onDelete}){
               <td className="actions">
                 <FaEdit className="icon edit" onClick={() => handleEdit(emp.id)} />
                 <FaTrash className="icon delete" onClick={() => handleDelete(emp.id)} />
+                  <FaEye className="icon eye" onClick={() => handleView(emp.id)} />
               </td>
             </tr>
           ))}

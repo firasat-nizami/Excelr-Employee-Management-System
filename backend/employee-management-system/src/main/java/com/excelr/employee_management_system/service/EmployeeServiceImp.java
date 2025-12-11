@@ -75,7 +75,7 @@ public class EmployeeServiceImp implements EmployeeService {
 		// TODO Auto-generated method stub
 		Employee emp =  employeeRepository.findByPersonalMail(lRDto.getpersonalMail()).orElseThrow(() ->  new EmployeeException("There is no emp with this email "+ lRDto.getpersonalMail()) );
 		if(encoder.matches(lRDto.getPassword(),emp.getPassword())) {
-			return new LoginResponseDto("Login Successful",null);
+			return new LoginResponseDto("Login Successful",null,emp.getFullName(),emp.getPersonalMail(),emp.getRoles(),emp.getId());
 			
 		}else {
 			throw new EmployeeException("Credentials did not match");

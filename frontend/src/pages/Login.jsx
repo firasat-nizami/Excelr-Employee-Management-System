@@ -36,9 +36,14 @@ const Login = () => {
       );
 
       console.log("Login Successful!", response.data);
+      localStorage.setItem("id", response.data.id);
+      localStorage.setItem("email", response.data.email);
+      localStorage.setItem("message", response.data.message);
+    localStorage.setItem("role", response.data.role);
+    localStorage.setItem("fullName", response.data.fullName);
 
-      // Example: redirect based on role
-      if (response.data.role === "ADMIN") {
+      //Example: redirect based on role
+      if (response.data.role === "ROLE_ADMIN") {
         window.location.href = "/admin-dashboard";
       } else {
         window.location.href = "/employee-dashboard";
@@ -78,7 +83,7 @@ const Login = () => {
 
   return (
     <>
-      <Header />
+     
 
       <div className="login-container">
         <div className="login-card">
@@ -115,7 +120,7 @@ const Login = () => {
         </div>
       </div>
 
-      <Footer />
+     
     </>
   );
 };

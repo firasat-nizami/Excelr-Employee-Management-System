@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import EmployeeTable from "../components/EmployeeTable";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
 
+  const navigate = useNavigate();
 
   const [empData, setEmpData] = useState([]);
 
@@ -28,11 +30,20 @@ const onDelete = async(id) => {
   fetchData();
 }
 
+const onView = (emp_id) => {
+  console.log("on view "+emp_id)
+   navigate(`/employee-dashboard/${emp_id}`, {
+  state: { employee: empData }
+});
 
+}
+
+const fullName = localStorage.getItem("fullName");
+const role = localStorage.getItem("role").substring(5);
   
   return (
     <div>
-      <h2>Admin Dashboard</h2>
+      <h2>Admin Dashboard -- {fullName} ( {role} ) </h2>
 
       <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))', gap:16, marginTop:16}}>
         <div className="card"><div className="stat-label">Total employees</div><div className="stat-value">{empData.length}</div></div>
@@ -42,7 +53,7 @@ const onDelete = async(id) => {
       </div>
 
       
-     <EmployeeTable employee = {empData} onDelete={onDelete}/>
+     <EmployeeTable employee = {empData} onDelete={onDelete} onView = {onView}/>
     </div>
   );
 }
