@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import * as Yup from "yup";
 import "../styles/Login.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -30,7 +29,7 @@ const Login = () => {
   const login = async (obj) => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/employees/login",
+        "http://localhost:8000/api/employees/login",
         obj,
         { headers: { "Content-Type": "application/json" } }
       );

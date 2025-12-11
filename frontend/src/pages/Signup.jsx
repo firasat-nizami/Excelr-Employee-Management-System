@@ -1,40 +1,135 @@
-import React from "react";
+// src/pages/Signup.jsx
+import React, { useState } from "react";
 import "../styles/Signup.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useFormik } from "formik";
-import { signupValidationSchema } from "../validation/signupValidation";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+
+const POST_URL = "http://localhost:8000/api/employees"; // your endpoint
 
 const Signup = () => {
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      employmentCode: "",
-      dob: "",
-      gender: "",
-      personalMail: "",
-      companyMail: "",
-      mobile: "",
-      emergencyContactName: "",
-      emergencyMobile: "",
-      currentCity: "",
-      currentAddressLine1: "",
-      currentAddressLine2: "",
-      currentPincode: "",
-      permanentCity: "",
-      permanentAddressLine1: "",
-      permanentAddressLine2: "",
-      permanentPincode: "",
-      password: "",
-      confirmPassword: "",
+  const [form, setForm] = useState({
+    fullName: "",
+    employmentCode: "",
+    dob: "",
+    gender: "",
+    age: "",
+    personalMail: "",
+    companyMail: "",
+    mobile: "",
+    emergencyContactName: "",
+    emergencyMobile: "",
+    password: "",
+    // nested address objects
+    currentAddress: {
+      city: "",
+      addressLine1: "",
+      addressLine2: "",
+      pincode: "",
     },
-
-    validationSchema: signupValidationSchema,
-
-    onSubmit: (values) => {
-      console.log("REGISTERED SUCCESSFULLY:", values);
+    permanentAddress: {
+      city: "",
+      addressLine1: "",
+      addressLine2: "",
+      pincode: "",
     },
   });
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  /**
+   * Generic change handler that supports nested keys using dot notation:
+   * name="currentAddress.city" -> updates form.currentAddress.city
+   */
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    // split on dot for nested updates
+    if (name.includes(".")) {
+      const [parentKey, childKey] = name.split(".");
+      setForm((prev) => ({
+        ...prev,
+        [parentKey]: {
+          ...prev[parentKey],
+          [childKey]: value,
+        },
+      }));
+    } else {
+      setForm((prev) => ({ ...prev, [name]: value }));
+    }
+    setError("");
+    setSuccess("");
+  };
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+    setLoading(true);
+
+    // Build payload matching your Postman example:
+    const payload = {
+      fullName: form.fullName,
+      dob: form.dob,
+      gender: form.gender,
+      age: form.age === "" ? undefined : Number(form.age),
+      employmentCode: form.employmentCode,
+      mobile: form.mobile,
+      personalMail: form.personalMail,
+      companyMail: form.companyMail,
+      emergencyContactName: form.emergencyContactName,
+      emergencyMobile: form.emergencyMobile,
+      password: form.password,
+      currentAddress: {
+        city: form.currentAddress.city,
+        addressLine1: form.currentAddress.addressLine1,
+        addressLine2: form.currentAddress.addressLine2,
+        pincode: form.currentAddress.pincode,
+      },
+      permanentAddress: {
+        city: form.permanentAddress.city,
+        addressLine1: form.permanentAddress.addressLine1,
+        addressLine2: form.permanentAddress.addressLine2,
+        pincode: form.permanentAddress.pincode,
+      },
+    };
+
+    // Log for debugging: you should now see currentAddress and permanentAddress
+    console.log("Submitting payload:", payload);
+
+     try {
+    const response = await axios.post(POST_URL, payload, {
+      // headers: { "Content-Type": "application/json" }, // axios sets this automatically for objects
+      // withCredentials: true, // enable if server uses cookies/sessions
+    });
+
+    // Only redirect on a successful status code
+    if (response.status >= 200 && response.status < 300) {
+      console.log("REGISTERED SUCCESSFULLY:", response.data);
+      // optional: store token / user data here before redirect
+      navigate("/admin-dashboard");
+    } else {
+      // unlikely because axios throws for non-2xx, but keep for clarity
+      setError("Unexpected response from the server.");
+      console.warn("Unexpected status:", response.status, response.data);
+    }
+  } catch (err) {
+    console.error("Submit error:", err);
+    const msg =
+      err?.response?.data?.message ||
+      JSON.stringify(err?.response?.data) ||
+      err?.message ||
+      "An error occurred while registering.";
+    setError(String(msg));
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <>
@@ -45,21 +140,16 @@ const Signup = () => {
           <h2>Create Account</h2>
           <p className="signup-subtext">Join EmployeeMS and manage your workspace</p>
 
-          <form onSubmit={formik.handleSubmit}>
-
+          <form onSubmit={handleSubmit}>
             {/* Full Name */}
             <label>Full Name</label>
             <input
               type="text"
-              name="name"
+              name="fullName"
               placeholder="Enter your full name"
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              value={form.fullName}
+              onChange={handleChange}
             />
-            {formik.touched.name && formik.errors.name && (
-              <p className="error-text">{formik.errors.name}</p>
-            )}
 
             {/* Employment Code */}
             <label>Employment Code</label>
@@ -67,43 +157,32 @@ const Signup = () => {
               type="text"
               name="employmentCode"
               placeholder="Enter employment code"
-              value={formik.values.employmentCode}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              value={form.employmentCode}
+              onChange={handleChange}
             />
-            {formik.touched.employmentCode && formik.errors.employmentCode && (
-              <p className="error-text">{formik.errors.employmentCode}</p>
-            )}
 
             {/* DOB */}
             <label>Date of Birth</label>
-            <input
-              type="date"
-              name="dob"
-              value={formik.values.dob}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.touched.dob && formik.errors.dob && (
-              <p className="error-text">{formik.errors.dob}</p>
-            )}
+            <input type="date" name="dob" value={form.dob} onChange={handleChange} />
 
             {/* Gender */}
             <label>Gender</label>
-            <select
-              name="gender"
-              value={formik.values.gender}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            >
+            <select name="gender" value={form.gender} onChange={handleChange}>
               <option value="">Select gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
               <option value="Other">Other</option>
             </select>
-            {formik.touched.gender && formik.errors.gender && (
-              <p className="error-text">{formik.errors.gender}</p>
-            )}
+
+            {/* Age */}
+            <label>Age</label>
+            <input
+              type="number"
+              name="age"
+              placeholder="Enter age"
+              value={form.age}
+              onChange={handleChange}
+            />
 
             {/* Personal Email */}
             <label>Personal Email</label>
@@ -111,13 +190,9 @@ const Signup = () => {
               type="email"
               name="personalMail"
               placeholder="Enter personal email"
-              value={formik.values.personalMail}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              value={form.personalMail}
+              onChange={handleChange}
             />
-            {formik.touched.personalMail && formik.errors.personalMail && (
-              <p className="error-text">{formik.errors.personalMail}</p>
-            )}
 
             {/* Company Email */}
             <label>Company Email</label>
@@ -125,13 +200,9 @@ const Signup = () => {
               type="email"
               name="companyMail"
               placeholder="Enter company email"
-              value={formik.values.companyMail}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              value={form.companyMail}
+              onChange={handleChange}
             />
-            {formik.touched.companyMail && formik.errors.companyMail && (
-              <p className="error-text">{formik.errors.companyMail}</p>
-            )}
 
             {/* Mobile */}
             <label>Mobile</label>
@@ -139,13 +210,9 @@ const Signup = () => {
               type="text"
               name="mobile"
               placeholder="Enter mobile number"
-              value={formik.values.mobile}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              value={form.mobile}
+              onChange={handleChange}
             />
-            {formik.touched.mobile && formik.errors.mobile && (
-              <p className="error-text">{formik.errors.mobile}</p>
-            )}
 
             {/* Emergency Contact Name */}
             <label>Emergency Contact Name</label>
@@ -153,14 +220,9 @@ const Signup = () => {
               type="text"
               name="emergencyContactName"
               placeholder="Enter emergency contact name"
-              value={formik.values.emergencyContactName}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              value={form.emergencyContactName}
+              onChange={handleChange}
             />
-            {formik.touched.emergencyContactName &&
-              formik.errors.emergencyContactName && (
-                <p className="error-text">{formik.errors.emergencyContactName}</p>
-              )}
 
             {/* Emergency Mobile */}
             <label>Emergency Mobile</label>
@@ -168,13 +230,9 @@ const Signup = () => {
               type="text"
               name="emergencyMobile"
               placeholder="Enter emergency mobile"
-              value={formik.values.emergencyMobile}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              value={form.emergencyMobile}
+              onChange={handleChange}
             />
-            {formik.touched.emergencyMobile && formik.errors.emergencyMobile && (
-              <p className="error-text">{formik.errors.emergencyMobile}</p>
-            )}
 
             {/* Current Address */}
             <h3>Current Address</h3>
@@ -182,54 +240,38 @@ const Signup = () => {
             <label>City</label>
             <input
               type="text"
-              name="currentCity"
+              name="currentAddress.city"
               placeholder="Enter city"
-              value={formik.values.currentCity}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              value={form.currentAddress.city}
+              onChange={handleChange}
             />
-            {formik.touched.currentCity && formik.errors.currentCity && (
-              <p className="error-text">{formik.errors.currentCity}</p>
-            )}
 
             <label>Address Line 1</label>
             <input
               type="text"
-              name="currentAddressLine1"
+              name="currentAddress.addressLine1"
               placeholder="Enter address line 1"
-              value={formik.values.currentAddressLine1}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              value={form.currentAddress.addressLine1}
+              onChange={handleChange}
             />
-            {formik.touched.currentAddressLine1 &&
-              formik.errors.currentAddressLine1 && (
-                <p className="error-text">
-                  {formik.errors.currentAddressLine1}
-                </p>
-              )}
 
             <label>Address Line 2</label>
             <input
               type="text"
-              name="currentAddressLine2"
+              name="currentAddress.addressLine2"
               placeholder="Enter address line 2"
-              value={formik.values.currentAddressLine2}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              value={form.currentAddress.addressLine2}
+              onChange={handleChange}
             />
 
             <label>Pincode</label>
             <input
               type="text"
-              name="currentPincode"
+              name="currentAddress.pincode"
               placeholder="Enter pincode"
-              value={formik.values.currentPincode}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              value={form.currentAddress.pincode}
+              onChange={handleChange}
             />
-            {formik.touched.currentPincode && formik.errors.currentPincode && (
-              <p className="error-text">{formik.errors.currentPincode}</p>
-            )}
 
             {/* Permanent Address */}
             <h3>Permanent Address</h3>
@@ -237,55 +279,38 @@ const Signup = () => {
             <label>City</label>
             <input
               type="text"
-              name="permanentCity"
+              name="permanentAddress.city"
               placeholder="Enter city"
-              value={formik.values.permanentCity}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              value={form.permanentAddress.city}
+              onChange={handleChange}
             />
-            {formik.touched.permanentCity && formik.errors.permanentCity && (
-              <p className="error-text">{formik.errors.permanentCity}</p>
-            )}
 
             <label>Address Line 1</label>
             <input
               type="text"
-              name="permanentAddressLine1"
+              name="permanentAddress.addressLine1"
               placeholder="Enter address line 1"
-              value={formik.values.permanentAddressLine1}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              value={form.permanentAddress.addressLine1}
+              onChange={handleChange}
             />
-            {formik.touched.permanentAddressLine1 &&
-              formik.errors.permanentAddressLine1 && (
-                <p className="error-text">
-                  {formik.errors.permanentAddressLine1}
-                </p>
-              )}
 
             <label>Address Line 2</label>
             <input
               type="text"
-              name="permanentAddressLine2"
+              name="permanentAddress.addressLine2"
               placeholder="Enter address line 2"
-              value={formik.values.permanentAddressLine2}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              value={form.permanentAddress.addressLine2}
+              onChange={handleChange}
             />
 
             <label>Pincode</label>
             <input
               type="text"
-              name="permanentPincode"
+              name="permanentAddress.pincode"
               placeholder="Enter pincode"
-              value={formik.values.permanentPincode}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              value={form.permanentAddress.pincode}
+              onChange={handleChange}
             />
-            {formik.touched.permanentPincode &&
-              formik.errors.permanentPincode && (
-                <p className="error-text">{formik.errors.permanentPincode}</p>
-              )}
 
             {/* Password */}
             <label>Password</label>
@@ -293,37 +318,21 @@ const Signup = () => {
               type="password"
               name="password"
               placeholder="Choose a password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              value={form.password}
+              onChange={handleChange}
             />
-            {formik.touched.password && formik.errors.password && (
-              <p className="error-text">{formik.errors.password}</p>
-            )}
-
-            <label>Confirm Password</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Re-enter password"
-              value={formik.values.confirmPassword}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.touched.confirmPassword &&
-              formik.errors.confirmPassword && (
-                <p className="error-text">{formik.errors.confirmPassword}</p>
-              )}
 
             {/* Submit Button */}
-            <button type="submit" className="signup-btn">
-              Sign Up
+            <button type="submit" className="signup-btn" disabled={loading}>
+              {loading ? "Signing up..." : "Sign Up"}
             </button>
+
+            {error && <p className="error-text" style={{ marginTop: 12 }}>{error}</p>}
+            {success && <p className="success-text" style={{ marginTop: 12 }}>{success}</p>}
           </form>
 
           <p className="signup-login-text">
-            Already have an account?{" "}
-            <a href="/login">Login</a>
+            Already have an account? <a href="/login">Login</a>
           </p>
         </div>
       </div>

@@ -29,7 +29,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin("http://localhost:5173")
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RequestMapping("/api/employees")
 public class EmployeeController {
 	

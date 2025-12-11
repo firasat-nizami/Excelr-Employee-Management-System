@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { FaEdit, FaTrash } from "react-icons/fa";
 import "./EmployeeTable.css";
+import { useNavigate } from "react-router-dom";
 
 
 export default function EmployeeTable({employee,onDelete}){
@@ -11,6 +12,8 @@ export default function EmployeeTable({employee,onDelete}){
     onDelete(id);
   };
 
+  const navigate = useNavigate();
+
   const handleEdit = (id) => {
     nav
   };
@@ -18,7 +21,7 @@ export default function EmployeeTable({employee,onDelete}){
       <div className="container">
       <h2 className="title">Employee List</h2>
 
-      <button className="create-btn" >
+      <button onClick={() => {navigate("/signup")}} className="create-btn" >
         + Create Employee
       </button>
        <table className="emp-table">
