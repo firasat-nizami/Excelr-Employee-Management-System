@@ -133,7 +133,6 @@ const Signup = () => {
 
   return (
     <>
-      <Header />
 
       <div className="signup-container">
         <div className="signup-card">
@@ -335,10 +334,7 @@ const Signup = () => {
             Already have an account? <a href="/login">Login</a>
           </p>
         </div>
-      </div>
-
-      <Footer />
-    </>
+      </div>    </>
   );
 };
 

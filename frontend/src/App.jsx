@@ -7,10 +7,15 @@ import Terms from "./pages/Terms";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Signup from "./pages/Signup"; // If you have this page
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import EmployeeDashboard from "./pages/EmployeeDashboard";
+import EmployeeView from "./pages/EmployeeView";
 
 function App() {
   return (
     <BrowserRouter>
+     <Header />
       <Routes>
         <Route path="/" element={<Home />} />
 
@@ -29,9 +34,11 @@ function App() {
 
          {/* Dashboards */}
  
-        <Route path="/employee-dashboard" element={<Dashboard />} />
+        <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
+        <Route path="/employee-dashboard/:emp_id" element={<EmployeeView/>} />
         
       </Routes>
+       <Footer />
     </BrowserRouter>
   );
 }

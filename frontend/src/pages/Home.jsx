@@ -8,7 +8,7 @@ import Footer from "../components/Footer";
 export default function Home() {
   return (
     <>
-      <Header />
+   
 
       <div className="home-container">
         <div className="home-text">
@@ -30,7 +30,7 @@ export default function Home() {
         </div>
       </div>
 
-      <Footer />  {/* ⭐ Footer only on Home */}
+     
     </>
   );
 }
